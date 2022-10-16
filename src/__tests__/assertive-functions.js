@@ -28,7 +28,7 @@ describe('App component', () => {
   test('renders the App component', async ()=>{
     render(<App/>)
     await waitFor(() => {
-      expect(screen.getByRole('textbox')).toHaveValue('User')
+      expect(screen.getByRole('textbox')).toHaveValue('user')
     })
 
   })

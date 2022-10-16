@@ -1,5 +1,5 @@
 import { React } from 'react'
-import { render, screen, act } from '@testing-library/react'
+import { render, screen, act, waitFor } from '@testing-library/react'
 
 import App from '../App'
 
@@ -33,7 +33,9 @@ describe('App tests', () => {
     })
 
     const searchElement = screen.getByRole('textbox')
-    expect(searchElement).toBeInTheDocument()
+    waitFor(() => {
+      expect(searchElement).toBeInTheDocument()
+    })
   })
   // queryBy:
   test('renders App component with Input', () => {
@@ -41,8 +43,9 @@ describe('App tests', () => {
 
     // queryBy is useful when checking whether or not an element is in a document
     // ex:
-    expect(screen.queryByText('JavaScript Rocks')).toBeNull()
-
+    waitFor(() => {
+      expect(screen.queryByText('JavaScript Rocks')).toBeNull()
+    })
   })
 
   // findBy: is for asynchronus elments which will be there eventually:
@@ -51,12 +54,14 @@ describe('App tests', () => {
   test('renders App component', async () => {
 
     render(<App />)
+    waitFor(async () => {
+      // expect(screen.queryByText(/Signed in as/)).toBeNull()
+      // screen.debug()
 
-    expect(screen.queryByText(/Signed in as/)).toBeNull()
-    // screen.debug()
-
-    // assert after user as been loaded
-    expect(await screen.findByText(/Signed in as /)).toBeInTheDocument()
+      // assert after user as been loaded
+      const signedInText = await screen.findByText(/Signed in as /)
+      expect(signedInText).toBeInTheDocument()
+    })
   })
 
 

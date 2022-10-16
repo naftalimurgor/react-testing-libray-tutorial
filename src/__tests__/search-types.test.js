@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, act } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
 
 // RTL supports many search types
@@ -15,12 +15,12 @@ import App from '../App'
 
 describe('App tests', () => {
   test('it should render App component', () => {
-    act(() => {
-      render(<App />)
-    })
+    render(<App />)
 
     // explicit, throws if element is not there:
-    screen.getByRole('textbox')
+    waitFor(() => {
+      screen.getByRole('textbox')
+    })
   })
 })
 
